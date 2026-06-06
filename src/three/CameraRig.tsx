@@ -6,21 +6,16 @@ import type { ActiveSection } from '../store/useStore';
 
 /**
  * Camera rig driven by activeSection (Zustand).
- * Each service section maps directly to a camera station so the 3D
- * object always lands precisely in the blank column regardless of
- * where on the total page scroll we are.
+ * Each service maps to a dedicated camera station so the 3D object
+ * always lands in the blank column regardless of total scroll %.
  *
- * Column offset formula at z=11, fov_y=58°, aspect˜16/9:
- *   halfFovX ˜ 44.6°  ?  tan(44.6°) ˜ 0.987
- *   offset = 0.5 × 11 × 0.987 ˜ 5.4 units
- *
- * Object world x-positions:
- *   marketing (right blank): x= 2    ? cam_x =  2   - 5.4 = -3.4
- *   content   (left  blank): x=-1.5  ? cam_x = -1.5 + 5.4 =  3.9
- *   video     (right blank): x= 2    ? cam_x =  2   - 5.4 = -3.4
- *   websites  (left  blank): x=-1    ? cam_x = -1   + 5.4 =  4.4
- *   software  (right blank): x= 1.5  ? cam_x =  1.5 - 5.4 = -3.9
- *   branding  (left  blank): x=-2    ? cam_x = -2   + 5.4 =  3.4
+ * offset = 0.5 * z * tan(halfFovX) ~= 5.4 at z=11, fov_y=58deg, 16:9
+ *   marketing  right blank  x= 2.0  cam_x = -3.4
+ *   content    left  blank  x=-1.5  cam_x =  3.9
+ *   video      right blank  x= 2.0  cam_x = -3.4
+ *   websites   left  blank  x=-1.0  cam_x =  4.4
+ *   software   right blank  x= 1.5  cam_x = -3.9
+ *   branding   left  blank  x=-2.0  cam_x =  3.4
  */
 type Station = { pos: THREE.Vector3; tgt: THREE.Vector3; fov: number };
 
