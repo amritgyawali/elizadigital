@@ -128,9 +128,10 @@ export default function ServiceSection({ service, isLast }: Props) {
 
       <style>{`
         @media (max-width: 768px) {
-          #service-${service.id} .service-sticky { background: var(--bg) !important; }
-          #service-${service.id} .service-sticky > div { grid-template-columns: 1fr !important; padding: 0 1.5rem !important; }
+          #service-${service.id} { height: auto !important; }
+          #service-${service.id} .service-sticky > div { grid-template-columns: 1fr !important; padding: 0 !important; gap: 0 !important; }
           #service-${service.id} .service-sticky > div > div:last-child { display: none !important; }
+          #service-${service.id} .service-sticky > div > div:first-child { order: 1 !important; }
         }
       `}</style>
     </section>

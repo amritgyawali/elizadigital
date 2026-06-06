@@ -17,12 +17,16 @@ export function initLenis(reducedMotion: boolean): Lenis {
     lenisInstance.destroy();
   }
 
+  const isMobile = /Mobi|Android/i.test(navigator.userAgent) || window.innerWidth < 769;
+
   lenisInstance = new Lenis({
     // Smooth lerp — 0.1 feels natural and premium
     lerp: reducedMotion ? 1 : 0.1,
     duration: reducedMotion ? 0 : 1.1,
     smoothWheel: !reducedMotion,
-    syncTouch: false,
+    // On mobile use native touch momentum, on desktop smooth scroll
+    syncTouch: isMobile,
+    touchMultiplier: isMobile ? 1.5 : 1,
   });
 
   // Wire ScrollTrigger to Lenis so pinned sections work correctly

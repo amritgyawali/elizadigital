@@ -397,5 +397,102 @@ body {
   background: var(--bg-tinted);
 }
 
+/* ─── Mobile (max-width: 768px) ─────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* 1. Hide 3D canvas entirely — saves GPU/CPU, avoids layout bleed */
+  #canvas-root { display: none !important; }
+
+  /* 2. Kill film grain — not worth the animation cost on mobile */
+  .grain-overlay { display: none !important; }
+
+  /* 3. Hero — tighter top padding, full safe-area height */
+  #hero {
+    padding: 5.5rem 1.5rem 3rem !important;
+    min-height: 100svh !important;
+  }
+
+  /* 4. Manifesto */
+  #manifesto { padding: 4.5rem 1.5rem !important; }
+
+  /* 5. Service sticky → normal flow: release the pin, auto height */
+  .service-sticky {
+    position: relative !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 5rem 1.5rem 4rem !important;
+    background: var(--bg) !important;
+    align-items: flex-start !important;
+  }
+
+  /* 6. Process */
+  #process { padding: 4.5rem 1.5rem !important; }
+  #process > div:first-child { margin-bottom: 2.5rem !important; }
+
+  /* 7. Proof */
+  #proof { padding: 4.5rem 1.5rem !important; }
+  #proof > div:first-child { margin-bottom: 2.5rem !important; }
+
+  /* 8. Contact */
+  #contact { padding: 4.5rem 1.5rem !important; }
+
+  /* 9. Cards — slightly less padding, tighter radius */
+  .card-elevated {
+    padding: 1.5rem !important;
+    border-radius: 12px !important;
+  }
+  .stat-card {
+    padding: 1.75rem 1.25rem !important;
+    border-radius: 12px !important;
+  }
+
+  /* 10. Buttons — full-width, taller touch target */
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 0.95rem 1.5rem;
+    min-height: 52px;
+    font-size: 1rem;
+  }
+
+  /* 11. Process grid: at least 2 cols so it uses space efficiently */
+  #process > div:last-child {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+    gap: 1rem !important;
+  }
+
+  /* 12. Proof stats: 2 cols on mobile */
+  #proof > div:nth-child(2) {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+    margin-bottom: 3rem !important;
+  }
+
+  /* 13. Testimonials: single column */
+  #proof > div:last-child {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* 14. Contact grid: single column */
+  #contact > div {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+  }
+
+  /* 15. Eyebrow pill in hero */
+  .hero-aurora::before { width: 100vw; height: 100vw; top: -40%; right: -30%; }
+  .hero-aurora::after  { display: none; }
+
+  /* 16. Native scrollbar hidden on mobile */
+  ::-webkit-scrollbar { display: none; }
+
+  /* 17. Word-reveal: simpler on mobile */
+  .word-inner { transform: none !important; }
+
+  /* 18. Loader text size */
+  .loader-bar { height: 3px; }
+}
+
 /* ─── Cursor (default system cursor) ──────────────────────────── */
 /* Custom cursor disabled — system cursor is used */

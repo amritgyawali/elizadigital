@@ -148,7 +148,7 @@ export default function Footer() {
                   minHeight: 44,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  border: '1px solid rgba(244,244,246,0.08)',
+                  border: '1px solid var(--border)',
                   borderRadius: 6,
                 }}
                 onMouseEnter={(e) => {

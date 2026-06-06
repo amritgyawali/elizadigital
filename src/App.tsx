@@ -1,4 +1,4 @@
-import { useEffect, Suspense, lazy } from 'react';
+import { useEffect, useState, Suspense, lazy } from 'react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { gsap } from 'gsap';
 import { useStore } from './store/useStore';
@@ -30,6 +30,7 @@ export default function App() {
   const setScrollProgress = useStore((s) => s.setScrollProgress);
   const reducedMotion     = useStore((s) => s.reducedMotion);
   const webGLAvailable    = useStore((s) => s.webGLAvailable);
+  const [isMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 769);
 
   useEffect(() => {
     const quality  = detectQualityTier();
@@ -72,7 +73,7 @@ export default function App() {
       {!reducedMotion && <CustomCursor />}
       <Loader />
 
-      {webGLAvailable && (
+      {webGLAvailable && !isMobile && (
         <Suspense fallback={null}>
           <Scene />
         </Suspense>
