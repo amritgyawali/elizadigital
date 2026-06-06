@@ -1,0 +1,401 @@
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=general-sans@400,500&display=swap');
+@import 'tailwindcss';
+
+/* ─── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --bg: #f8f7f4;
+  --bg-elev: #ffffff;
+  --bg-subtle: #f0eefb;
+  --bg-tinted: #f3f2f0;
+  --text: #0e0c1a;
+  --text-muted: #7a7585;
+  --text-light: #a8a3b0;
+  --brand: #6c42ed;
+  --brand-light: rgba(108, 66, 237, 0.1);
+  --brand-mid: rgba(108, 66, 237, 0.2);
+  --accent-2: #0891b2;
+  --accent-cta: #d97706;
+  --border: rgba(14, 12, 26, 0.08);
+  --border-strong: rgba(14, 12, 26, 0.15);
+  --shadow-xs: 0 1px 3px rgba(14,12,26,0.06), 0 1px 2px rgba(14,12,26,0.04);
+  --shadow-sm: 0 4px 12px rgba(14,12,26,0.07), 0 1px 3px rgba(14,12,26,0.04);
+  --shadow-md: 0 12px 32px rgba(14,12,26,0.09), 0 4px 12px rgba(14,12,26,0.05);
+  --shadow-lg: 0 24px 56px rgba(14,12,26,0.12), 0 8px 20px rgba(14,12,26,0.06);
+
+  /* Service accents */
+  --marketing: #6c42ed;
+  --content: #0891b2;
+  --video: #e11d5a;
+  --websites: #0d9488;
+  --software: #d97706;
+  --branding: #6c42ed;
+
+  /* Typography */
+  --font-display: 'Clash Display', 'Arial Black', sans-serif;
+  --font-body: 'General Sans', 'Helvetica Neue', sans-serif;
+
+  /* Spacing rhythm */
+  --section-py: clamp(5rem, 10vw, 10rem);
+}
+
+/* ─── Base Reset ─────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  color-scheme: light;
+  scroll-behavior: auto; /* Lenis handles this */
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Typography Scale ───────────────────────────────────────── */
+.display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 7rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 5rem);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+}
+
+.display-md {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.5vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.display-sm {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 2rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.body-lg {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.7;
+}
+
+.body-sm {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ─── Canvas Overlay ─────────────────────────────────────────── */
+#canvas-root {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#dom-root {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Film Grain ─────────────────────────────────────────────── */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.022;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  animation: grain-shift 0.5s steps(1) infinite;
+}
+
+@keyframes grain-shift {
+  0%   { transform: translate(0, 0); }
+  10%  { transform: translate(-3%, -3%); }
+  20%  { transform: translate(3%, 0); }
+  30%  { transform: translate(0, 3%); }
+  40%  { transform: translate(-3%, 3%); }
+  50%  { transform: translate(3%, -3%); }
+  60%  { transform: translate(-3%, 0); }
+  70%  { transform: translate(0, -3%); }
+  80%  { transform: translate(3%, 3%); }
+  90%  { transform: translate(-3%, -3%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ─── Skip Link ──────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--brand);
+  color: white;
+  padding: 0.5rem 1rem;
+  z-index: 10000;
+  text-decoration: none;
+  font-weight: 500;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ─── Focus Styles ───────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ─── Word Reveal Animation ──────────────────────────────────── */
+.word-wrap {
+  overflow: hidden;
+  display: inline-block;
+}
+
+.word-inner {
+  display: inline-block;
+  transform: translateY(110%);
+  will-change: transform;
+}
+
+/* ─── Accent Lines ───────────────────────────────────────────── */
+.accent-line {
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--brand);
+  margin-bottom: 1.5rem;
+}
+
+/* ─── Button Styles ──────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: var(--brand);
+  color: white;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 8px rgba(108,66,237,0.25), 0 1px 2px rgba(108,66,237,0.15);
+}
+
+.btn-primary:hover {
+  background: #5a35d4;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(108,66,237,0.35), 0 2px 6px rgba(108,66,237,0.2);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: var(--bg-elev);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.2s;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  box-shadow: var(--shadow-xs);
+}
+
+.btn-secondary:hover {
+  border-color: var(--brand);
+  background: var(--brand-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ─── Section Dividers ───────────────────────────────────────── */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 0;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tinted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(108, 66, 237, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(108, 66, 237, 0.55);
+}
+
+/* ─── Reduced Motion Override ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .word-inner {
+    transform: none;
+  }
+  .grain-overlay {
+    animation: none;
+  }
+}
+
+/* ─── Service Section Layout ─────────────────────────────────── */
+.service-pin-container {
+  position: relative;
+}
+
+.service-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* ─── Counter Animation ──────────────────────────────────────── */
+@keyframes count-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Loader ─────────────────────────────────────────────────── */
+.loader-bar {
+  height: 2px;
+  background: linear-gradient(90deg, var(--brand), var(--accent-2));
+  transform-origin: left;
+}
+
+/* ─── Card ───────────────────────────────────────────────────── */
+.card-elevated {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.card-elevated:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* ─── Hero Gradient ──────────────────────────────────────────── */
+.hero-aurora {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.hero-aurora::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 70vw;
+  height: 70vw;
+  max-width: 800px;
+  max-height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(108,66,237,0.12) 0%, rgba(8,145,178,0.06) 40%, transparent 70%);
+  animation: aurora-drift 14s ease-in-out infinite alternate;
+}
+
+.hero-aurora::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -5%;
+  width: 50vw;
+  height: 50vw;
+  max-width: 600px;
+  max-height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(13,148,136,0.07) 0%, transparent 65%);
+  animation: aurora-drift 18s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(3%, 3%) scale(1.05); }
+  100% { transform: translate(-3%, -2%) scale(0.97); }
+}
+
+/* ─── Bento Grid Enhancements ────────────────────────────────── */
+.stat-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  box-shadow: var(--shadow-xs);
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.stat-card:hover {
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-3px);
+}
+
+/* ─── Section Background Bands ──────────────────────────────── */
+.section-band {
+  background: var(--bg-tinted);
+}
+
+/* ─── Cursor (default system cursor) ──────────────────────────── */
+/* Custom cursor disabled — system cursor is used */
